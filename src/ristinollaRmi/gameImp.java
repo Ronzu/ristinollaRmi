@@ -4,21 +4,21 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class gameImp extends UnicastRemoteObject implements game {
+public class GameImp extends UnicastRemoteObject implements Game {
 	
 	// atribuutit ensiksi
 	// helpgrid jossa on valmiit numerot jotta pelaaja saa valita paikan mihin laittaa x tai o
 	private int[][] helpGrid = {{1,2,3},{4,5,6},{7,8,9}}; 
 	private String[][] grid; // oikea pelialusta 
-	private player player1;
-	private player player2;
+	private Player player1;
+	private Player player2;
 	private boolean gameOn;
-	private player turn;
+	private Player turn;
 	
 	
 	
 	
-	public gameImp(player player1, player player2) throws RemoteException{
+	public GameImp(Player player1, Player player2) throws RemoteException{
 		super();
 		
 		this.player1 = player1;
@@ -34,7 +34,7 @@ public class gameImp extends UnicastRemoteObject implements game {
 	}// gamimp constructor
 	
 	@Override
-	public int getPlayer(player player) throws RemoteException{
+	public int getPlayer(Player player) throws RemoteException{
 		if (player.isMe(player1))
 			return 1;
 		else if(player.isMe(player2))
@@ -48,7 +48,7 @@ public class gameImp extends UnicastRemoteObject implements game {
 	}
 	
 	@Override
-	public void makeMove(player player, String marker) throws RemoteException{
+	public void makeMove(Player player, String marker) throws RemoteException{
 		/* kysyt‰‰n pelaajalta mihin numeroon h‰n haluaa laittaa oman merkin
 		 * ja sijoitetaan sen mukaan mihin laitetaan 
 		 * helpGrid on sit‰ varten ett‰ pelaaja tiet‰‰ mit‰ numerot vastaa
