@@ -3,14 +3,14 @@ package ristinollaRmi;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class playerImp  extends UnicastRemoteObject implements player {
+public class PlayerImp extends UnicastRemoteObject implements Player {
 	
 	private String name;
 	private String marker;
 	
 	
 	
-	protected playerImp(String name) throws RemoteException {
+	protected PlayerImp(String name) throws RemoteException {
 		super();
 		this.name = name; //pelaajan otetaan talteen 
 		this.marker = "x tai o"; //alustava merkki m‰‰ritell‰‰n vasta peli alussa.
@@ -18,7 +18,7 @@ public class playerImp  extends UnicastRemoteObject implements player {
 
 	
 	@Override
-	public boolean isMe(player player) throws RemoteException{
+	public boolean isMe(Player player) throws RemoteException{
 		if(player == null){
 			return false;
 		}
@@ -50,6 +50,10 @@ public class playerImp  extends UnicastRemoteObject implements player {
 	@Override
 	public String getName() throws RemoteException{
 		return name;
+	}
+	
+	public String echo() throws RemoteException {
+		return "T‰‰ll‰ ollaan";
 	}
 
 }
