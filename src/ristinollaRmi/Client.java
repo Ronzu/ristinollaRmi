@@ -16,8 +16,15 @@ import javax.swing.JTextField;
 
 public class Client {
 	
+	
+	
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 	
+		/*
+		 * 
+		 * T‰ss‰ m‰‰ritell‰‰n pelin ikkuna
+		 * 
+		 */
 		JFrame jframe = new JFrame("Ristinolla");
 		Container container = jframe.getContentPane();
 		Font helvetica = new Font("Helvetica", Font.PLAIN, 10);
@@ -25,27 +32,41 @@ public class Client {
 		final JTextField portField = new JTextField(30);
 		targetField.setFont(helvetica);
 		portField.setFont(helvetica);
-		JButton b = new JButton("Test");
-		
-		Player player = (Player) Naming.lookup("rmi://localhost:5099/player");
-			
+		JButton b = new JButton("Nappula");
 		container.add(targetField, BorderLayout.NORTH);
 		container.add(portField, BorderLayout.SOUTH);
 		container.add(b);
 		jframe.pack();
 		jframe.setVisible(true);
-		
 		b.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					try {
-						portField.setText(player.echo());
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 			}
 		});
+	
+		
+		/*
+		 * Ja koodin kimppuun:
+		 */
+		
+		String name = "placeholder";
+		
+		
+		try {
+			Lobby lobby = (Lobby) Naming.lookup("lobby");
+			Player player = new PlayerImp(lobby, name);
+			
+			lobby.findGame(player);
+			
+			
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+
 		
 	}
 	

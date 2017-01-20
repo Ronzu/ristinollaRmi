@@ -1,26 +1,18 @@
 package ristinollaRmi;
 
-import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class Server {
 
-	public static void main(String... args) {
+	public static void main(String[] args) {
 		try {
 			
 			Registry registry = LocateRegistry.createRegistry(5099);
-
-
-				PlayerImp player1 = new PlayerImp("Player 1");
-				PlayerImp player2 = new PlayerImp("Player 2");
-				
+			LobbyImp lobby = new LobbyImp();
 			
-				GameImp game = new GameImp(player1, player2);
-				registry.rebind("player", player1);
-				registry.rebind("player2", player2);
-				
-				System.out.println("Server is up and running");
+			registry.rebind(Lobby.NAMING, lobby);
+			System.out.println("Lobby is up and running");
 		
 		} catch (Exception e) {
 			e.printStackTrace();

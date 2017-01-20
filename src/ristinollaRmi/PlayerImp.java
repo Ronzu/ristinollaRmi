@@ -4,9 +4,21 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class PlayerImp extends UnicastRemoteObject implements Player {
-	
+
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String marker;
+	private Lobby lobby;
+	
+	/*
+	 * 20.1.
+	 * Lisätty uusi konstruktori joka ottaa myös Lobbyn mukaan. En tiedä vielä, miksi.
+	 */
+	public PlayerImp(Lobby lobby, String name) throws RemoteException {
+		super();
+		this.lobby = lobby;
+		this.name = name;
+	}
 	
 	
 	
