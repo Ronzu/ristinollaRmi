@@ -15,13 +15,16 @@ public class LobbyImp extends UnicastRemoteObject implements Lobby {
 	}
 
 	public void findGame(Player player) throws RemoteException {
+		
 		/*
 		 * Tässä mietin että noi lobbysta löytyvät pelaajat voisi tallettaa jonomuodossa arraylistiin.
 		 * 
-		 * Sitten jää luuppaamaan, kunnes mestoille on saapunut toinenkin pelaaja. 
+		 * Sitten jää odottelemaan, kunnes mestoille on saapunut toinenkin pelaaja.
 		 */
-		players.add(player);
 		
+		players = new ArrayList<Player>();
+		games = new ArrayList<Game>();
+		players.add(player);
 		
 		if (players.size() >= 2) {
 			

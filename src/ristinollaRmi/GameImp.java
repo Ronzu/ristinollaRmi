@@ -8,8 +8,15 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	
 	// atribuutit ensiksi
 	// helpgrid jossa on valmiit numerot jotta pelaaja saa valita paikan mihin laittaa x tai o
-	private int[][] helpGrid = {{1,2,3},{4,5,6},{7,8,9}}; 
-	private String[][] grid; // oikea pelialusta 
+	// private int[][] helpGrid = {{1,2,3},{4,5,6},{7,8,9}}; 
+	
+	/*
+	 * 20.1.s
+	 * Otin helpgridin veks, koska teen Swingillä graafisen käyttöliittymän. 
+	 */
+	
+	
+	private String[] grid; // oikea pelialusta 
 	private Player player1;
 	private Player player2;
 	private boolean gameOn;
@@ -26,6 +33,9 @@ public class GameImp extends UnicastRemoteObject implements Game {
 		gameOn = true;
 		this.player1.setMarker("X");
 		this.player2.setMarker("O");
+		this.player1.setGame(this);
+		this.player2.setGame(this);
+		
 		
 	}// gamimp constructor
 	
@@ -39,6 +49,13 @@ public class GameImp extends UnicastRemoteObject implements Game {
 			return 0;
 	}//getplayer
 
+	@Override
+	public void makeMove(Player player, String sign) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 		
 		
 }// gameImp

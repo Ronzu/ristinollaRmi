@@ -20,6 +20,13 @@ public class Client {
 	
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 	
+		
+		/*
+		 * Ja koodin kimppuun:
+		 */
+		String name = "placeholder";
+		
+
 		/*
 		 * 
 		 * T‰ss‰ m‰‰ritell‰‰n pelin ikkuna
@@ -38,36 +45,33 @@ public class Client {
 		container.add(b);
 		jframe.pack();
 		jframe.setVisible(true);
-		b.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-	
 		
 		/*
-		 * Ja koodin kimppuun:
+		 * Peli-ikkunan button etsii pelin ja k‰ynnist‰‰ sen.
 		 */
+		b.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				try {
+					Lobby lobby = (Lobby) Naming.lookup("rmi://localhost:5099/" + Lobby.NAMING);
+					PlayerImp player = new PlayerImp(lobby, name);
+					lobby.findGame(player);
+					
+					Thread t = new Thread(player);
+					
+					t.start();
+					
+					portField.setText(player.echo());
+						
+				} catch (MalformedURLException | RemoteException | NotBoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		
-		String name = "placeholder";
-		
-		
-		try {
-			Lobby lobby = (Lobby) Naming.lookup("lobby");
-			Player player = new PlayerImp(lobby, name);
-			
-			lobby.findGame(player);
-			
-			
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-
-		
+				
 	}
 	
 	

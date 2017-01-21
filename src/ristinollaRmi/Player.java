@@ -10,6 +10,8 @@ public interface Player extends Remote {
 	public boolean isMe(Player player) throws RemoteException;
 
 	public void setMarker(String m) throws RemoteException;
+	
+	public void setGame(Game game) throws RemoteException;
 
 	public String getMarker() throws RemoteException;
 
