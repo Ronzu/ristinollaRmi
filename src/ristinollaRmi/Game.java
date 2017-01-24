@@ -12,10 +12,33 @@ public interface Game extends Remote {
 	public static final int ENDGAME = 1;
 	public static final int OPTURN = 2;
 	
+	public static final int[] GAMEGRID = {1,2,3,4,5,6,7,8,9};
+	public static final int[][] WINNINGPOSITIONS = { 
+		{0,1,2},
+		{3,4,5},
+		{6,7,8},
+		
+		{0,3,6},
+		{1,4,7},
+		{2,5,8},
+		
+		{0,4,8},
+		{2,4,6}
+	};
+	
+	
 	
 	public int getPlayer(Player player) throws RemoteException;
 	
 	
+	/*
+	 * Palauttaa pelin tilan pelaajalle, jotta tiedet‰‰n milloin on oma vuoro.
+	 */
+	public int getGameState(Player player) throws RemoteException;
+	
+	/* 
+	 * 
+	 */
 	public void makeMove(Player player, String sign) throws RemoteException;
 
 }
