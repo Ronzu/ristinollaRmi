@@ -29,8 +29,38 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 	
 	@Override
 	public void run(){
-
-			System.out.println("The game is on.");
+		
+		System.out.println("The player is ok.");
+		
+		try {
+			lobby.findGame(this);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		while (true) {
+			try {
+				if (game != null) {
+					
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		/* TODO 
+		 * 
+		 * hae peli lobbysta OK
+		 * odottele pelaajaa peliin
+		 * saa pelimerkit 
+		 * piirr‰ pelilauta
+		 * aloita peli
+		 * 
+		 * keksi lis‰‰ mit‰ pit‰‰ tehd‰
+		 */
 		
 		
 	}

@@ -55,17 +55,18 @@ public class Client {
 				try {
 					Lobby lobby = (Lobby) Naming.lookup("rmi://localhost:5099/" + Lobby.NAMING);
 					PlayerImp player = new PlayerImp(lobby, name);
-					lobby.findGame(player);
 					
-					Thread t = new Thread(player);
+					lobby.findGame(player); // lis‰‰ Clientin pelaajan peliin
 					
-					t.start();
+					Thread t = new Thread(player); 
+					
+					t.start(); // k‰ynnist‰‰ pelaaja-olion 
 					
 					portField.setText(player.echo());
 						
-				} catch (MalformedURLException | RemoteException | NotBoundException e1) {
+				} catch (MalformedURLException | RemoteException | NotBoundException ex) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					ex.printStackTrace();
 				}
 				
 			}

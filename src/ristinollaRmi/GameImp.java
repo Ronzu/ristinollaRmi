@@ -2,7 +2,6 @@ package ristinollaRmi;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Scanner;
 
 public class GameImp extends UnicastRemoteObject implements Game {
 	
@@ -16,10 +15,14 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	 */
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String[] grid; // oikea pelialusta 
 	private Player player1;
 	private Player player2;
-	private boolean gameOn;
+	private boolean gameAlive;
 	private Player turn;
 	
 	
@@ -53,6 +56,17 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	public void makeMove(Player player, String sign) throws RemoteException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getGameState(Player player) throws RemoteException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+	public boolean isGameAlive () {
+		return this.gameAlive;
 	}
 
 	

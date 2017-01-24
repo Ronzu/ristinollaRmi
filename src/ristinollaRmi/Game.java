@@ -13,7 +13,7 @@ public interface Game extends Remote {
 	public static final int OPTURN = 2;
 	
 	public static final int[] GAMEGRID = {1,2,3,4,5,6,7,8,9};
-	public static final int[][] WINNINGPOSITIONS = { 
+	public static final int[][] WINNING_POSITIONS = { 
 		{0,1,2},
 		{3,4,5},
 		{6,7,8},
