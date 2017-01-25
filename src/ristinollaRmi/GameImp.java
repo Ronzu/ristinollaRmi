@@ -33,7 +33,7 @@ public class GameImp extends UnicastRemoteObject implements Game {
 		
 		this.player1 = player1;
 		this.player2 = player2;
-		gameOn = true;
+		gameAlive = true;
 		this.player1.setMarker("X");
 		this.player2.setMarker("O");
 		this.player1.setGame(this);

@@ -39,6 +39,7 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 			e.printStackTrace();
 		}
 		
+		/*
 		while (true) {
 			try {
 				if (game != null) {
@@ -48,7 +49,7 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 				e.printStackTrace();
 			}
 		}
-		
+		*/
 		
 		
 		/* TODO 
