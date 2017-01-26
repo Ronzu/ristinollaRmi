@@ -29,6 +29,11 @@ public class MainFrame extends JFrame {
 		lobbyStatus = new JTextField();
 		
 		
+		/*
+		 * Tämä alkaa nyt olla OK! 
+		 * 
+		 */
+		
 		findGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
@@ -47,7 +52,8 @@ public class MainFrame extends JFrame {
 					
 					
 					lobby.findGame(player); 
-					
+					lobbyStatus.setText("Odotetaan toista pelaajaa...");
+					int i = 1;
 					
 					while(true) {
 						try {
@@ -56,8 +62,12 @@ public class MainFrame extends JFrame {
 								lobbyStatus.setText(player.echo());
 								break;
 							}
-							lobbyStatus.setText("Odotetaan toista pelaajaa...");
+							
 							Thread.sleep(1000);
+							
+							
+							
+							
 							System.out.println("Odotetaan");
 						} catch (InterruptedException ex) {
 							ex.printStackTrace();

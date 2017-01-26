@@ -10,7 +10,7 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	// private int[][] helpGrid = {{1,2,3},{4,5,6},{7,8,9}}; 
 	
 	/*
-	 * 20.1.s
+	 * 20.1.
 	 * Otin helpgridin veks, koska teen Swingillä graafisen käyttöliittymän. 
 	 */
 	
@@ -19,7 +19,7 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String[] grid; // oikea pelialusta 
+	private int[] grid; // oikea pelialusta 
 	private Player player1;
 	private Player player2;
 	private boolean gameAlive;
@@ -43,6 +43,8 @@ public class GameImp extends UnicastRemoteObject implements Game {
 		this.player1.setGame(this);
 		this.player2.setGame(this);
 		
+		turn = player1;
+		
 	}// gamimp constructor
 	
 	/*
@@ -60,8 +62,22 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	}//getplayer
 
 	@Override
-	public void makeMove(Player player, String sign, int gridPosition) throws RemoteException {
+	public boolean makeMove(Player player, int gridPosition) throws RemoteException {
 		// TODO Auto-generated method stub
+		if(grid[gridPosition] == 0) {	
+			if (player.isMe(player1)) {
+				grid[gridPosition] = 1;
+			} else if (player.isMe(player2)) {
+				grid[gridPosition] = 2;
+			}
+		} else {
+			return false;
+		}
+
+		
+		printGrid();
+		return true;
+		
 		
 	}
 
@@ -72,15 +88,29 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	}
 	
 	@Override
-	public boolean isGameAlive () {
+	public boolean isGameAlive() throws RemoteException {
 		return this.gameAlive;
 	}
 
 	public void initGrid() {
-		this.grid = new String[9];
-		for(int i = 0; i<=9; i++) {
-			this.grid[i] = (i++) + "";
+		this.grid = new int[9];
+		for(int i = 0; i<9; i++) {
+			this.grid[i] = 0;
 		}
+	}
+	
+	@Override
+	public void printGrid() throws RemoteException {
+		for(int i = 0;i<grid.length;i++){
+			if(i%3 == 0){
+				System.out.println();
+				System.out.println("+-+-+-+");
+				System.out.print("|");
+			}
+			System.out.print(grid[i] + "|");
+		}
+		System.out.println();
+		System.out.println("+-+-+-+");
 	}
 		
 		

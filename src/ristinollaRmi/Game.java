@@ -39,8 +39,10 @@ public interface Game extends Remote {
 	/* 
 	 * tekee muutoksen pelilautaan.
 	 */
-	public void makeMove(Player player, String sign, int gridPosition) throws RemoteException;
+	public boolean makeMove(Player player, int gridPosition) throws RemoteException;
 
 	public boolean isGameAlive() throws RemoteException;
+	
+	public void printGrid() throws RemoteException;
 	
 }

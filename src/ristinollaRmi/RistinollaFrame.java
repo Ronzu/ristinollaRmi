@@ -26,7 +26,7 @@ class RistinollaFrame extends JFrame {
 	GamePanel panel; // 
 	PlayerImp player;
 	Game game;
-	GameListener listener = new GameListener(game, player); // Kuuntelee napsautukset ja p‰ivitt‰‰ pelin tilaa.
+	GameListener listener; // Kuuntelee napsautukset ja p‰ivitt‰‰ pelin tilaa.
 	
 	/*
 	 * 
@@ -38,9 +38,12 @@ class RistinollaFrame extends JFrame {
 		
 		try {
 			this.game = player.getGame();
+
 		} catch(RemoteException e) {
 			e.printStackTrace();
 		}
+
+		listener = new GameListener(game, player);
 		
 		Thread t = new Thread(player); 
 		t.start(); // k‰ynnist‰‰ pelaaja-olion 
@@ -53,6 +56,7 @@ class RistinollaFrame extends JFrame {
 		statusbar.setEditable(false);
 		add(statusbar, BorderLayout.SOUTH);
 		setTitle("Ristinolla");
+		
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(400,400,400,400);
@@ -111,7 +115,6 @@ class RistinollaFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("A button " + e.getSource() + " was pressed");
 			
 			GameButton gamebutton = null;
 			int pressedButtonIndex = -1;
@@ -124,12 +127,16 @@ class RistinollaFrame extends JFrame {
 				pressedButtonIndex = gamebutton.getOneDimensionalIndex();
 			}
 			
-			System.out.println(pressedButtonIndex);
+			System.out.println("A button " + pressedButtonIndex + " was pressed");
 			
 			try { 
 				
-				game.makeMove(player, player.getMarker(), pressedButtonIndex);
-				gamebutton.setText(player.getMarker());
+				boolean legalMove = game.makeMove(player, pressedButtonIndex);
+				if (legalMove) {
+					gamebutton.setText(player.getMarker());
+				} else {
+					//TODO: pop-up joka ilmoittaa ett‰ n‰in ei saa tehd‰, ja antaa pelaajan valita uudestaan
+				}
 			} catch (RemoteException ex) {
 				System.out.println("Connection lost");			
 			}
