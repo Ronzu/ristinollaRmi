@@ -5,5 +5,5 @@ import java.rmi.RemoteException;
 
 public interface Lobby extends Remote {
 	public static final String NAMING = "lobby";
-	public void findGame(Player player) throws RemoteException;
+	public boolean findGame(Player player) throws RemoteException;
 }

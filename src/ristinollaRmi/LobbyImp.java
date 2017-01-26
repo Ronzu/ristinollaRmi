@@ -33,9 +33,10 @@ public class LobbyImp extends UnicastRemoteObject implements Lobby {
 	 * 
 	 */
 	
-	public synchronized void findGame(Player player) throws RemoteException {
+	public boolean findGame(Player player) throws RemoteException {
 
 		players.add(player);
+		System.out.println("Pelaaja " + player.getName() + " lisätty Lobbyyn.");
 		
 		if (players.size() >= 2 && players.get(0) != null && players.get(0) != null) {
 			
@@ -43,16 +44,18 @@ public class LobbyImp extends UnicastRemoteObject implements Lobby {
 			
 			try{
 				playerIsAlive = player.isAlive();
-
+				System.out.println("Check");
 			} catch (RemoteException e) {
 				players.remove(0);
 			}
+			
 			if (playerIsAlive) {
+				for(Player playerIteration : players) {
+					System.out.println(playerIteration.getName());
+				}
 				games.add(new GameImp(players.remove(0), players.remove(0)));
 				System.out.println("Peli alkanut.");
 			}
-			
-
 		}
 		
 		//Poistetaan loppuneet pelit.
@@ -62,6 +65,6 @@ public class LobbyImp extends UnicastRemoteObject implements Lobby {
 			}
 		}
 		
-		
+		return true;
 	}
 }

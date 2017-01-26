@@ -20,11 +20,7 @@ import javax.swing.JTextField;
 
 class RistinollaFrame extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
 	GameButton [][] buttons = new GameButton[3][3]; // Buttonit vastaamaan ristinollaruudukkoa
 	JTextField statusbar; // Tilapalkki kertoo pelin tilan
 	GamePanel panel; // 
@@ -32,6 +28,11 @@ class RistinollaFrame extends JFrame {
 	Game game;
 	GameListener listener = new GameListener(game, player); // Kuuntelee napsautukset ja p‰ivitt‰‰ pelin tilaa.
 	
+	/*
+	 * 
+	 * Konstruktori:
+	 * 
+	 */
 	public RistinollaFrame(PlayerImp player) {
 		this.player = player;
 		
@@ -58,9 +59,9 @@ class RistinollaFrame extends JFrame {
 		
 	}
 	
+	
 	class GamePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
-
 		public GamePanel() {
 			setLayout(new GridLayout(3,3));
 			for(int i=0;i<3;i++)
@@ -94,7 +95,7 @@ class RistinollaFrame extends JFrame {
 		 * yksiulotteisen indeksin laskemiseen.
 		 */
 		public int getOneDimensionalIndex() {
-			return indexX + indexY*gridHeight;
+			return indexY + indexX*gridHeight;
 		}
 	}
 	

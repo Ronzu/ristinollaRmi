@@ -32,13 +32,7 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 		
 		System.out.println("The player is ok.");
 		
-		try {
-			lobby.findGame(this);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	
 		/*
 		while (true) {
 			try {
@@ -131,7 +125,7 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 	 */
 	
 	public String echo() throws RemoteException {
-		return "I'm alive";
+		return this.name + "is alive";
 	}
 	
 	

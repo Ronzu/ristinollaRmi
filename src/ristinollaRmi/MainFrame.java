@@ -36,7 +36,7 @@ public class MainFrame extends JFrame {
 					Lobby lobby = (Lobby) Naming.lookup("rmi://localhost:5099/" + Lobby.NAMING);
 					PlayerImp player;
 					
-					if(playerName.getText() == "Syötä pelinimesi" || playerName.getText() == "") {	
+					if(playerName.getText().equalsIgnoreCase("syötä pelinimesi") || playerName.getText() == "") {	
 						//Luodaan random pelaajanimi jos ei käyttäjä laita.
 						int random = (int)(Math.random() * 10000);
 						String randomPlayerName = "player" + random;
@@ -45,10 +45,24 @@ public class MainFrame extends JFrame {
 						player = new PlayerImp(lobby, playerName.getText());
 					}
 					
-					lobby.findGame(player); // lisää Clientin pelaajan peliin
-					lobbyStatus.setText(player.echo());
 					
-					ristinollaFrame = new RistinollaFrame(player);
+					lobby.findGame(player); 
+					
+					
+					while(true) {
+						try {
+							if(player.getGame() != null) {
+								RistinollaFrame ristinollaFrame = new RistinollaFrame(player);
+								lobbyStatus.setText(player.echo());
+								break;
+							}
+							lobbyStatus.setText("Odotetaan toista pelaajaa...");
+							Thread.sleep(1000);
+							System.out.println("Odotetaan");
+						} catch (InterruptedException ex) {
+							ex.printStackTrace();
+						}
+					}
 					
 				} catch (MalformedURLException | RemoteException | NotBoundException ex) {
 			
