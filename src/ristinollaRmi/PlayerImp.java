@@ -55,9 +55,9 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 		/* TODO 
 		 * 
 		 * hae peli lobbysta OK
-		 * odottele pelaajaa peliin
-		 * saa pelimerkit 
-		 * piirrä pelilauta
+		 * odottele pelaajaa peliin OK
+		 * saa pelimerkit OK, hoituu game-objektin konstruktorissa
+		 * piirrä pelilauta OK, Game-objektin konstruktorissa.
 		 * aloita peli
 		 * 
 		 * keksi lisää mitä pitää tehdä
@@ -66,6 +66,26 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 		
 	}
 	
+	/*
+	 * 21.1.
+	 * Pistetään nyt tämmöinen setGame-metodi tänne, jota peliolio kutsuu laittamalla itsensä parametriksi.
+	 * Sitten saadaan pelaajatkin tietoiseksi siitä, minkä peliolion kanssa ollaan tekemisissä.
+	 */
+
+	@Override
+	public void setGame(Game game) throws RemoteException {
+		this.game = game;
+	}
+	
+	@Override
+	public Game getGame() throws RemoteException {
+		return this.game;
+	}
+	
+	/*
+	 * Selvitetään tässä, onko vuorossa tämä pelaaja vai toinen.
+	 * 
+	 */
 	
 	@Override
 	public boolean isMe(Player player) throws RemoteException{
@@ -79,13 +99,17 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 		return false;
 	}
 	
-	public void print(String smth){ // voidaan tulostaa tietoa pelaajalle
+	/*
+	 * Voidaan tulostaa tietoa pelaajalle.
+	 */
+	
+	public void print(String smth){ 
 		System.out.println(smth);
 	}
 	
 	/*
 	 * Marker on pelaajan ns tunnus eli X tai O
-	 * tällä voidaan katsoa kumpi laitetaan oikeaan pelipöytään
+	 * tällä voidaan määrätä kumpi laitetaan oikeaan pelipöytään
 	 */
 	@Override
 	public void setMarker(String m) throws RemoteException{
@@ -102,19 +126,26 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 		return name;
 	}
 	
+	/*
+	 * Testailua varten...
+	 */
+	
 	public String echo() throws RemoteException {
 		return "I'm alive";
 	}
 	
+	
 	/*
-	 * 21.1.
-	 * Pistetään nyt tämmöinen setGame-metodi tänne, jota peliolio kutsuu laittamalla itsensä parametriksi.
-	 * Sitten saadaan pelaajatkin tietoiseksi siitä, minkä peliolion kanssa ollaan tekemisissä.
+	 * (non-Javadoc)
+	 * @see ristinollaRmi.Player#isAlive()
+	 * 
+	 * tämähän voi palauttaa aina true, sillä kun Clientti suljetaan, kuolee myös 
+	 * pelaajaobjekti eikä kutsua enää voida suorittaa.
+	 * Tällöin voidaan poikkeus hoitaa try-catch-blokilla.
 	 */
-
-	@Override
-	public void setGame(Game game) throws RemoteException {
-		this.game = game;
+	public boolean isAlive() throws RemoteException {
+		return true;
 	}
+
 
 }

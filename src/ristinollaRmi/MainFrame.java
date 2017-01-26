@@ -28,12 +28,22 @@ public class MainFrame extends JFrame {
 		playerName = new JTextField("Syötä pelinimesi");
 		lobbyStatus = new JTextField();
 		
+		
 		findGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
 				try {
 					Lobby lobby = (Lobby) Naming.lookup("rmi://localhost:5099/" + Lobby.NAMING);
-					PlayerImp player = new PlayerImp(lobby, playerName.getText());
+					PlayerImp player;
+					
+					if(playerName.getText() == "Syötä pelinimesi" || playerName.getText() == "") {	
+						//Luodaan random pelaajanimi jos ei käyttäjä laita.
+						int random = (int)(Math.random() * 10000);
+						String randomPlayerName = "player" + random;
+						player = new PlayerImp(lobby, randomPlayerName);
+					} else {
+						player = new PlayerImp(lobby, playerName.getText());
+					}
 					
 					lobby.findGame(player); // lisää Clientin pelaajan peliin
 					lobbyStatus.setText(player.echo());

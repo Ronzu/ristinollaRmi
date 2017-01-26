@@ -31,16 +31,23 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	public GameImp(Player player1, Player player2) throws RemoteException {
 		super();
 		
+		initGrid();
+		
 		this.player1 = player1;
 		this.player2 = player2;
+		
 		gameAlive = true;
+		
 		this.player1.setMarker("X");
 		this.player2.setMarker("O");
 		this.player1.setGame(this);
 		this.player2.setGame(this);
 		
-		
 	}// gamimp constructor
+	
+	/*
+	 * Antaa todellisuudessa pelivuoron.
+	 */
 	
 	@Override
 	public int getPlayer(Player player) throws RemoteException{
@@ -53,7 +60,7 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	}//getplayer
 
 	@Override
-	public void makeMove(Player player, String sign) throws RemoteException {
+	public void makeMove(Player player, String sign, int gridPosition) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -64,12 +71,17 @@ public class GameImp extends UnicastRemoteObject implements Game {
 		return 0;
 	}
 	
-	
+	@Override
 	public boolean isGameAlive () {
 		return this.gameAlive;
 	}
 
-	
+	public void initGrid() {
+		this.grid = new String[9];
+		for(int i = 0; i<=9; i++) {
+			this.grid[i] = (i++) + "";
+		}
+	}
 		
 		
 }// gameImp
