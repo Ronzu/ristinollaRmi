@@ -23,4 +23,6 @@ public interface Player extends Remote {
 	
 	public Game getGame () throws RemoteException;
 
+	void print(String smth) throws RemoteException;
+
 }
