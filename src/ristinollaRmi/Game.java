@@ -6,8 +6,8 @@ import java.rmi.RemoteException;
 
 public interface Game extends Remote {
 		
-	// otetaan k‰yttˆˆn 0 1 2 jotta tiedet‰‰n onko kenen vuoro ja
-	// pelin p‰‰ttyminen
+	// otetaan k√§ytt√∂√∂n 0 1 2 jotta tiedet√§√§n onko kenen vuoro ja
+	// pelin p√§√§ttyminen
 	public static final int MYTURN = 0;
 	public static final int ENDGAME = 1;
 	public static final int OPTURN = 2;
@@ -32,9 +32,9 @@ public interface Game extends Remote {
 	
 	
 	/*
-	 * Palauttaa pelin tilan pelaajalle, jotta tiedet‰‰n milloin on oma vuoro.
+	 * Palauttaa pelin tilan pelaajalle, jotta tiedet√§√§n milloin on oma vuoro.
 	 */
-	public int getGameState(Player player) throws RemoteException;
+	int isItMyTurn(Player player) throws RemoteException;
 	
 	/* 
 	 * tekee muutoksen pelilautaan.
@@ -44,5 +44,12 @@ public interface Game extends Remote {
 	public boolean isGameAlive() throws RemoteException;
 	
 	public void printGrid() throws RemoteException;
+
+	int[] getGrid() throws RemoteException;
+
+	void setGrid(int x) throws RemoteException;
+
+
+	
 	
 }
