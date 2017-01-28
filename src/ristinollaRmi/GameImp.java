@@ -11,7 +11,7 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	
 	/*
 	 * 20.1.
-	 * Otin helpgridin veks, koska teen Swingill‰ graafisen k‰yttˆliittym‰n. 
+	 * Otin helpgridin veks, koska teen Swingill√§ graafisen k√§ytt√∂liittym√§n. 
 	 */
 	
 	
@@ -23,7 +23,8 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	private Player player1;
 	private Player player2;
 	private boolean gameAlive;
-	private Player turn;
+	private Player playing;
+	private boolean turn;
 	
 	
 	
@@ -43,7 +44,9 @@ public class GameImp extends UnicastRemoteObject implements Game {
 		this.player1.setGame(this);
 		this.player2.setGame(this);
 		
-		turn = player1;
+		this.playing = player1;
+		this.player1.print("You are player 1");
+		this.player2.print("you are player 2");
 		
 	}// gamimp constructor
 	
@@ -64,27 +67,45 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	@Override
 	public boolean makeMove(Player player, int gridPosition) throws RemoteException {
 		// TODO Auto-generated method stub
-		if(grid[gridPosition] == 0) {	
+		
+		if(grid[gridPosition] == 0 && playing.isMe(player) == true) {
+			
 			if (player.isMe(player1)) {
-				grid[gridPosition] = 1;
-			} else if (player.isMe(player2)) {
-				grid[gridPosition] = 2;
+				grid[gridPosition] = 1;		
+				
 			}
-		} else {
+		else if (player.isMe(player2)) {
+				grid[gridPosition] = 2;
+				
+			}
+		} 
+		else {
+			grid[gridPosition] = 0;
 			return false;
 		}
-
 		
+		if(playing.isMe(player1)){
+			playing = player2;
+		}
+		else if(playing.isMe(player2)){
+			playing = player1;
+		}
+
 		printGrid();
 		return true;
-		
 		
 	}
 
 	@Override
-	public int getGameState(Player player) throws RemoteException {
+	public int isItMyTurn(Player player) throws RemoteException {
 		// TODO Auto-generated method stub
-		return 0;
+		if (playing.isMe(player1)){
+			return MYTURN;
+		}
+		else if(playing.isMe(player2)){
+			return OPTURN;
+		}
+		else return ENDGAME;
 	}
 	
 	@Override
@@ -112,11 +133,20 @@ public class GameImp extends UnicastRemoteObject implements Game {
 		System.out.println();
 		System.out.println("+-+-+-+");
 	}
-		
+	
+	@Override
+	public int[] getGrid() throws RemoteException{
+		return grid;
+	}
+	
+	@Override
+	public void setGrid(int x) throws RemoteException{
+		grid[x] = 0;
+	}
+	
 		
 }// gameImp
 
 	
 	
-
 
