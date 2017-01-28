@@ -5,7 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 /*
  * 20.1.
- * Pistet√§√§n PlayerImp runnableksi, sill√§ silloin voidaan hyvin keskustella Gamen kanssa
+ * Pistet‰‰n PlayerImp runnableksi, sill‰ silloin voidaan hyvin keskustella Gamen kanssa
  */
 
 public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
@@ -18,7 +18,7 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 	
 	/*
 	 * 20.1.
-	 * Lis√§tty uusi konstruktori joka ottaa my√∂s Lobbyn mukaan. 
+	 * Lis‰tty uusi konstruktori joka ottaa myˆs Lobbyn mukaan. 
 	 */
 	public PlayerImp(Lobby lobby, String name) throws RemoteException {
 		this.lobby = lobby;
@@ -51,10 +51,10 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 		 * hae peli lobbysta OK
 		 * odottele pelaajaa peliin OK
 		 * saa pelimerkit OK, hoituu game-objektin konstruktorissa
-		 * piirr√§ pelilauta OK, Game-objektin konstruktorissa.
+		 * piirr‰ pelilauta OK, Game-objektin konstruktorissa.
 		 * aloita peli
 		 * 
-		 * keksi lis√§√§ mit√§ pit√§√§ tehd√§
+		 * keksi lis‰‰ mit‰ pit‰‰ tehd‰
 		 */
 		
 		
@@ -62,8 +62,8 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 	
 	/*
 	 * 21.1.
-	 * Pistet√§√§n nyt t√§mm√∂inen setGame-metodi t√§nne, jota peliolio kutsuu laittamalla itsens√§ parametriksi.
-	 * Sitten saadaan pelaajatkin tietoiseksi siit√§, mink√§ peliolion kanssa ollaan tekemisiss√§.
+	 * Pistet‰‰n nyt t‰mmˆinen setGame-metodi t‰nne, jota peliolio kutsuu laittamalla itsens‰ parametriksi.
+	 * Sitten saadaan pelaajatkin tietoiseksi siit‰, mink‰ peliolion kanssa ollaan tekemisiss‰.
 	 */
 
 	@Override
@@ -77,7 +77,7 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 	}
 	
 	/*
-	 * Selvitet√§√§n t√§ss√§, onko vuorossa t√§m√§ pelaaja vai toinen.
+	 * Selvitet‰‰n t‰ss‰, onko vuorossa t‰m‰ pelaaja vai toinen.
 	 * 
 	 */
 	
@@ -104,7 +104,7 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 	
 	/*
 	 * Marker on pelaajan ns tunnus eli X tai O
-	 * t√§ll√§ voidaan m√§√§r√§t√§ kumpi laitetaan oikeaan pelip√∂yt√§√§n
+	 * t‰ll‰ voidaan m‰‰r‰t‰ kumpi laitetaan oikeaan pelipˆyt‰‰n
 	 */
 	@Override
 	public void setMarker(String m) throws RemoteException{
@@ -134,9 +134,9 @@ public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
 	 * (non-Javadoc)
 	 * @see ristinollaRmi.Player#isAlive()
 	 * 
-	 * t√§m√§h√§n voi palauttaa aina true, sill√§ kun Clientti suljetaan, kuolee my√∂s 
-	 * pelaajaobjekti eik√§ kutsua en√§√§ voida suorittaa.
-	 * T√§ll√∂in voidaan poikkeus hoitaa try-catch-blokilla.
+	 * t‰m‰h‰n voi palauttaa aina true, sill‰ kun Clientti suljetaan, kuolee myˆs 
+	 * pelaajaobjekti eik‰ kutsua en‰‰ voida suorittaa.
+	 * T‰llˆin voidaan poikkeus hoitaa try-catch-blokilla.
 	 */
 	public boolean isAlive() throws RemoteException {
 		return true;

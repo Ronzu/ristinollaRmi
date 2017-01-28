@@ -11,7 +11,7 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	
 	/*
 	 * 20.1.
-	 * Otin helpgridin veks, koska teen Swingill√§ graafisen k√§ytt√∂liittym√§n. 
+	 * Otin helpgridin veks, koska teen Swingill‰ graafisen k‰yttˆliittym‰n. 
 	 */
 	
 	
@@ -80,7 +80,6 @@ public class GameImp extends UnicastRemoteObject implements Game {
 			}
 		} 
 		else {
-			grid[gridPosition] = 0;
 			return false;
 		}
 		
@@ -144,6 +143,32 @@ public class GameImp extends UnicastRemoteObject implements Game {
 		grid[x] = 0;
 	}
 	
+	@Override
+	public int getWinner() throws RemoteException{
+		/*
+		 * vois varmasti keksi‰ jonkun hienon loopin mutten jaksanu.
+		 */
+			if(grid[0] == 1 && grid[1] == 1 && grid[2] == 1) return 1;
+			if(grid[3] == 1 && grid[4] == 1 && grid[5] == 1) return 1;
+			if(grid[6] == 1 && grid[7] == 1 && grid[8] == 1) return 1;
+			if(grid[0] == 1 && grid[3] == 1 && grid[6] == 1) return 1;
+			if(grid[1] == 1 && grid[4] == 1 && grid[7] == 1) return 1;
+			if(grid[2] == 1 && grid[5] == 1 && grid[8] == 1) return 1;
+			if(grid[0] == 1 && grid[4] == 1 && grid[8] == 1) return 1;
+			if(grid[2] == 1 && grid[4] == 1 && grid[6] == 1) return 1;
+		
+			if(grid[0] == 2 && grid[1] == 2 && grid[2] == 2) return 2;
+			if(grid[3] == 2 && grid[4] == 2 && grid[5] == 2) return 2;
+			if(grid[6] == 2 && grid[7] == 2 && grid[8] == 2) return 2;
+			if(grid[0] == 2 && grid[3] == 2 && grid[6] == 2) return 2;
+			if(grid[1] == 2 && grid[4] == 2 && grid[7] == 2) return 2;
+			if(grid[2] == 2 && grid[5] == 2 && grid[8] == 2) return 2;
+			if(grid[0] == 2 && grid[4] == 2 && grid[8] == 2) return 2;
+			if(grid[2] == 2 && grid[4] == 2 && grid[6] == 2) return 2;
+		
+			else return 0;
+	
+	}
 		
 }// gameImp
 

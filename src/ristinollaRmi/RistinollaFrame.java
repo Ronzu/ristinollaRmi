@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 /*
  * 
- * T√§ss√§ on nyt luokka peli-ikkunan muodostamista varten.
+ * T‰ss‰ on nyt luokka peli-ikkunan muodostamista varten.
  * 
  */
 
@@ -27,7 +27,7 @@ class RistinollaFrame extends JFrame {
 	GamePanel panel; // 
 	PlayerImp player;
 	Game game;
-	GameListener listener; // Kuuntelee napsautukset ja p√§ivitt√§√§ pelin tilaa.
+	GameListener listener; // Kuuntelee napsautukset ja p‰ivitt‰‰ pelin tilaa.
 	
 	/*
 	 * 
@@ -47,13 +47,13 @@ class RistinollaFrame extends JFrame {
 		listener = new GameListener(game, player);
 		
 		Thread t = new Thread(player); 
-		t.start(); // k√§ynnist√§√§ pelaaja-olion 
+		t.start(); // k‰ynnist‰‰ pelaaja-olion 
 		
 		setLayout(new BorderLayout());
 		panel = new GamePanel();
 		add(panel, BorderLayout.CENTER);
 		
-		statusbar = new JTextField( " vuoro");
+		statusbar = new JTextField(player.getName());
 		statusbar.setEditable(false);
 		add(statusbar, BorderLayout.SOUTH);
 		setTitle("Ristinolla");
@@ -86,7 +86,7 @@ class RistinollaFrame extends JFrame {
 		private static final long serialVersionUID = 4747888981137584058L;
 		private int indexX;
 		private int indexY;
-		private int gridHeight = 3; // Nyt tiedet√§√§n ett√§ on 3x3 taulu...
+		private int gridHeight = 3; // Nyt tiedet‰‰n ett‰ on 3x3 taulu...
 		
 		public void setIndex(int x, int y) {
 			this.indexX = x;
@@ -94,9 +94,9 @@ class RistinollaFrame extends JFrame {
 		}
 		
 		/*
-		 * t√§t√§ tarvitaan l√§hinn√§ game-objektin kanssa kommunikoimiseen, 
-		 * sill√§ siell√§ on pelin tila yksiulotteisessa taulussa.
-		 * t√§ss√§ on buttonit kaksiulotteisesti, joten k√§ytet√§√§n niiden indeksej√§ 
+		 * t‰t‰ tarvitaan l‰hinn‰ game-objektin kanssa kommunikoimiseen, 
+		 * sill‰ siell‰ on pelin tila yksiulotteisessa taulussa.
+		 * t‰ss‰ on buttonit kaksiulotteisesti, joten k‰ytet‰‰n niiden indeksej‰ 
 		 * yksiulotteisen indeksin laskemiseen.
 		 */
 		public int getOneDimensionalIndex() {
@@ -133,14 +133,24 @@ class RistinollaFrame extends JFrame {
 			
 			try {
 				boolean LegalMove = game.makeMove(player, pressedButtonIndex);
+				int Winner = game.getWinner();
 				if (LegalMove) {
 					gamebutton.setText(player.getMarker());
-					System.out.println(game.isItMyTurn(player));
+					System.out.println(game.getWinner());
+					if (Winner == 1){
+						JOptionPane.showMessageDialog(null," Player 1 has won!","Gongratulations",JOptionPane.OK_OPTION);
+						dispose();
+					}
+					if (Winner == 2){
+						JOptionPane.showMessageDialog(null," Player 2 has won!","Gongratulations",JOptionPane.OK_OPTION);
+						dispose();
+					}
 				}
+				
 				else   {
-					//TODO: pop-up joka ilmoittaa ett√§ n√§in ei saa tehd√§, ja antaa pelaajan valita uudestaan
+					//TODO: pop-up joka ilmoittaa ett‰ n‰in ei saa tehd‰, ja antaa pelaajan valita uudestaan
 					
-					JOptionPane.showMessageDialog(null,"Tile is already full","Try again",JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null,"It's opponents turn or tile is full","Try again",JOptionPane.WARNING_MESSAGE);
 				}
 
 			} catch (RemoteException ex) {
