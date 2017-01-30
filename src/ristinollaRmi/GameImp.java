@@ -83,6 +83,8 @@ public class GameImp extends UnicastRemoteObject implements Game {
 			return false;
 		}
 		
+
+		// Lopuksi vaihdetaan vuoro.
 		if(playing.isMe(player1)){
 			playing = player2;
 		}
@@ -146,7 +148,8 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	@Override
 	public int getWinner() throws RemoteException{
 		/*
-		 * vois varmasti keksiä jonkun hienon loopin mutten jaksanu.
+		 * @Author Ronzu
+		 * vois varmasti keksiä jonkun hienon loopin mutten jaksanu. t. Roni :D:D:D:D
 		 */
 			if(grid[0] == 1 && grid[1] == 1 && grid[2] == 1) return 1;
 			if(grid[3] == 1 && grid[4] == 1 && grid[5] == 1) return 1;
@@ -165,9 +168,20 @@ public class GameImp extends UnicastRemoteObject implements Game {
 			if(grid[2] == 2 && grid[5] == 2 && grid[8] == 2) return 2;
 			if(grid[0] == 2 && grid[4] == 2 && grid[8] == 2) return 2;
 			if(grid[2] == 2 && grid[4] == 2 && grid[6] == 2) return 2;
+			
+			boolean full = true;
+			
+			for(int i = 0; i < grid.length; i++) {
+				if(grid[i] == 0) {
+					full = false;
+				}
+			}
+			
+			if(full) {
+				return 3;
+			}
 		
 			else return 0;
-	
 	}
 		
 }// gameImp

@@ -53,19 +53,18 @@ public class MainFrame extends JFrame {
 					
 					lobby.findGame(player); 
 					lobbyStatus.setText("Odotetaan toista pelaajaa...");
-					int i = 1;
 					
 					while(true) {
 						try {
 							if(player.getGame() != null) {
 								RistinollaFrame ristinollaFrame = new RistinollaFrame(player);
+								Thread t  = new Thread(ristinollaFrame);
+								t.start();
 								lobbyStatus.setText(player.echo());
 								break;
 							}
 							
 							Thread.sleep(1000);
-							
-							
 							
 							
 							System.out.println("Odotetaan");

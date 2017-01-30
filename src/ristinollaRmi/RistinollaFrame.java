@@ -19,7 +19,7 @@ import javax.swing.JTextField;
  */
 
 
-class RistinollaFrame extends JFrame {
+public class RistinollaFrame extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	GameButton [][] buttons = new GameButton[3][3]; // Buttonit vastaamaan ristinollaruudukkoa
@@ -60,16 +60,54 @@ class RistinollaFrame extends JFrame {
 		
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(400,400,400,400);
+		setBounds(400,400,400,400);	
+	}
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+		while(true) {
+			try {
+				panel.updateButtons(this.game.getGrid());
+				checkWinner();
+				
+			} catch (RemoteException ex) {
+				ex.printStackTrace();
+			}
+		}
 		
 	}
 	
+	protected void checkWinner() throws RemoteException {
+		int winner = game.getWinner();
+		
+		if (winner == 1){
+			JOptionPane.showMessageDialog(null," Player 1 has won!","Gongratulations",JOptionPane.OK_OPTION);
+			System.exit(0);
+		}
+		if (winner == 2){
+			JOptionPane.showMessageDialog(null," Player 2 has won!","Gongratulations",JOptionPane.OK_OPTION);
+			System.exit(0);
+		}
+		if (winner == 3) {
+			JOptionPane.showMessageDialog(null," Stalemate!",null,JOptionPane.OK_OPTION);
+			System.exit(0);
+		}
+
+	}
 	
+
+	/*
+	 * 
+	 * Sisäluokka GamePanel ristinollaruudukkoa varten.
+	 * 
+	 */
 	class GamePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 		public GamePanel() {
 			setLayout(new GridLayout(3,3));
-			for(int i=0;i<3;i++)
+			for(int i=0;i<3;i++) {
 				for(int j=0;j<3;j++)   {
 					buttons[i][j]=new GameButton();
 					buttons[i][j].putClientProperty("INDEX", new Integer[]{i,j});
@@ -77,8 +115,27 @@ class RistinollaFrame extends JFrame {
 					buttons[i][j].addActionListener(listener);
 					buttons[i][j].setIndex(i, j);
 					add(buttons[i][j]);
-			}			
+				}			
+			}
 		}
+		
+		public void updateButtons(int[] grid) {
+			for(int i=0;i<3;i++) {
+				for(int j=0;j<3;j++)   {
+					int currentPosMarker = grid[i*3 + j];
+					
+					GameButton button = buttons[i][j];
+					
+					if(currentPosMarker == 1) {
+						button.setText("X");
+					} else if (currentPosMarker == 2) {
+						button.setText("O");
+					} 
+					
+				}			
+			}
+		}
+		
 	}
 	
 	class GameButton extends JButton {
@@ -133,18 +190,10 @@ class RistinollaFrame extends JFrame {
 			
 			try {
 				boolean LegalMove = game.makeMove(player, pressedButtonIndex);
-				int Winner = game.getWinner();
+//				int Winner = game.getWinner();
 				if (LegalMove) {
-					gamebutton.setText(player.getMarker());
 					System.out.println(game.getWinner());
-					if (Winner == 1){
-						JOptionPane.showMessageDialog(null," Player 1 has won!","Gongratulations",JOptionPane.OK_OPTION);
-						dispose();
-					}
-					if (Winner == 2){
-						JOptionPane.showMessageDialog(null," Player 2 has won!","Gongratulations",JOptionPane.OK_OPTION);
-						dispose();
-					}
+					
 				}
 				
 				else   {
@@ -156,6 +205,10 @@ class RistinollaFrame extends JFrame {
 			} catch (RemoteException ex) {
 				System.out.println("Connection lost");			
 			}
+			
 		}
+		
 	}
+
+
 }
