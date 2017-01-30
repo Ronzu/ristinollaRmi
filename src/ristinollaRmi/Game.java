@@ -19,7 +19,7 @@ public interface Game extends Remote {
 	/*
 	 * Palauttaa pelin tilan pelaajalle, jotta tiedet‰‰n milloin on oma vuoro.
 	 */
-	int isItMyTurn(Player player) throws RemoteException;
+	public boolean isItMyTurn(Player player) throws RemoteException;
 	
 	/* 
 	 * tekee muutoksen pelilautaan.
@@ -30,13 +30,17 @@ public interface Game extends Remote {
 	
 	public void printGrid() throws RemoteException;
 
-	int[] getGrid() throws RemoteException;
+	public int[] getGrid() throws RemoteException;
 
-	void setGrid(int x) throws RemoteException;
+	public void setGrid(int x) throws RemoteException;
 
-	int getWinner() throws RemoteException;
+	public int getWinner() throws RemoteException;
+	
+	public Player getPlayerOne() throws RemoteException;
 
-
+	public Player getPlayerTwo() throws RemoteException;
+	
+	public Player getOpponent(Player player) throws RemoteException;
 	
 	
 }

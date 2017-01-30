@@ -3,61 +3,22 @@ package ristinollaRmi;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-/*
- * 20.1.
- * Pistet‰‰n PlayerImp runnableksi, sill‰ silloin voidaan hyvin keskustella Gamen kanssa
- */
 
-public class PlayerImp extends UnicastRemoteObject implements Player, Runnable {
+public class PlayerImp extends UnicastRemoteObject implements Player{
 
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private String marker;
-	private Lobby lobby;
 	private Game game;
 	
 	/*
 	 * 20.1.
 	 * Lis‰tty uusi konstruktori joka ottaa myˆs Lobbyn mukaan. 
 	 */
-	public PlayerImp(Lobby lobby, String name) throws RemoteException {
-		this.lobby = lobby;
+	public PlayerImp(String name) throws RemoteException {
 		this.name = name;
 		this.game = null;
 		this.marker = "x tai o";
-	}
-	
-	@Override
-	public void run(){
-		
-		System.out.println("The player is ok.");
-		System.out.println(name);
-	
-		/*
-		while (true) {
-			try {
-				if (game != null) {
-					
-				}
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
-		*/
-		
-		
-		/* TODO 
-		 * 
-		 * hae peli lobbysta OK
-		 * odottele pelaajaa peliin OK
-		 * saa pelimerkit OK, hoituu game-objektin konstruktorissa
-		 * piirr‰ pelilauta OK, Game-objektin konstruktorissa.
-		 * aloita peli
-		 * 
-		 * keksi lis‰‰ mit‰ pit‰‰ tehd‰
-		 */
-		
-		
 	}
 	
 	/*

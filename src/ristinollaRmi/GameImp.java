@@ -24,7 +24,6 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	private Player player2;
 	private boolean gameAlive;
 	private Player playing;
-	private boolean turn;
 	
 	
 	
@@ -98,15 +97,13 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	}
 
 	@Override
-	public int isItMyTurn(Player player) throws RemoteException {
-		// TODO Auto-generated method stub
-		if (playing.isMe(player1)){
-			return MYTURN;
+	public boolean isItMyTurn(Player player) throws RemoteException {
+		if (playing.isMe(player)){
+			return true;
 		}
-		else if(playing.isMe(player2)){
-			return OPTURN;
+		else {
+			return false;
 		}
-		else return ENDGAME;
 	}
 	
 	@Override
@@ -145,12 +142,18 @@ public class GameImp extends UnicastRemoteObject implements Game {
 		grid[x] = 0;
 	}
 	
+	/*
+	 * @Author Ronzu
+	 * Tää on nyt tämmöinen purkkaviritys
+	 * 
+	 * pelaaja1:n voitto : return 1
+	 * pelaaja2:n voitto : return 2
+	 * pelaaja3:n voitto : return 3
+	 */
+	
 	@Override
 	public int getWinner() throws RemoteException{
-		/*
-		 * @Author Ronzu
-		 * vois varmasti keksiä jonkun hienon loopin mutten jaksanu. t. Roni :D:D:D:D
-		 */
+		
 			if(grid[0] == 1 && grid[1] == 1 && grid[2] == 1) return 1;
 			if(grid[3] == 1 && grid[4] == 1 && grid[5] == 1) return 1;
 			if(grid[6] == 1 && grid[7] == 1 && grid[8] == 1) return 1;
@@ -182,6 +185,28 @@ public class GameImp extends UnicastRemoteObject implements Game {
 			}
 		
 			else return 0;
+	}
+
+	@Override
+	public Player getPlayerOne() throws RemoteException {
+		// TODO Auto-generated method stub
+		return this.player1;
+	}
+
+	@Override
+	public Player getPlayerTwo() throws RemoteException {
+		// TODO Auto-generated method stub
+		return this.player2;
+	}
+	
+	@Override
+	public Player getOpponent(Player player) throws RemoteException {
+		if (player.isMe(player1))
+			return this.player2;
+		else if(player.isMe(player2))
+			return this.player1;
+		else
+			return null;
 	}
 		
 }// gameImp

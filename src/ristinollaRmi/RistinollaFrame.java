@@ -28,6 +28,7 @@ public class RistinollaFrame extends JFrame implements Runnable {
 	PlayerImp player;
 	Game game;
 	GameListener listener; // Kuuntelee napsautukset ja p‰ivitt‰‰ pelin tilaa.
+	String status;
 	
 	/*
 	 * 
@@ -46,9 +47,6 @@ public class RistinollaFrame extends JFrame implements Runnable {
 
 		listener = new GameListener(game, player);
 		
-		Thread t = new Thread(player); 
-		t.start(); // k‰ynnist‰‰ pelaaja-olion 
-		
 		setLayout(new BorderLayout());
 		panel = new GamePanel();
 		add(panel, BorderLayout.CENTER);
@@ -63,37 +61,66 @@ public class RistinollaFrame extends JFrame implements Runnable {
 		setBounds(400,400,400,400);	
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 * 
+	 * T‰‰ll‰ p‰ivitell‰‰n sitten k‰yttˆliittym‰‰, jatkuvasti kyll‰kin, onko j‰rkev‰‰, no ei.
+	 * 
+	 */
+	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		
 		while(true) {
 			try {
-				panel.updateButtons(this.game.getGrid());
+				updateView();
 				checkWinner();
+				Thread.sleep(100);
 				
-			} catch (RemoteException ex) {
+			} catch (RemoteException | InterruptedException ex) {
 				ex.printStackTrace();
 			}
 		}
 		
 	}
 	
+	protected void updateView() throws RemoteException {
+		panel.updateView(this.game.getGrid()); // P‰ivitt‰‰ nappulat
+		
+		boolean turn = this.game.isItMyTurn(this.player);
+		
+		
+		if (turn) {
+			status = "It's your turn.";
+		} else {
+			status = "It's your opponent's (" + this.game.getOpponent(this.player).getName() + ") turn.";
+		}
+		
+		statusbar.setText(status);
+	}
+	
+	/*
+	 * 
+	 */
+	
 	protected void checkWinner() throws RemoteException {
 		int winner = game.getWinner();
 		
-		if (winner == 1){
-			JOptionPane.showMessageDialog(null," Player 1 has won!","Gongratulations",JOptionPane.OK_OPTION);
-			System.exit(0);
+		switch(winner) {
+			case 1: JOptionPane.showMessageDialog(null,this.game.getPlayerOne().getName() + " has won!","Gongratulations",JOptionPane.OK_OPTION);
+					System.exit(0);	
+					break;
+			case 2: JOptionPane.showMessageDialog(null,this.game.getPlayerOne().getName() + " has won!","Gongratulations",JOptionPane.OK_OPTION);
+					System.exit(0);
+					break;
+			case 3: JOptionPane.showMessageDialog(null,"Stalemate!",null,JOptionPane.OK_OPTION);
+					System.exit(0);
+					break;
+			default: 
 		}
-		if (winner == 2){
-			JOptionPane.showMessageDialog(null," Player 2 has won!","Gongratulations",JOptionPane.OK_OPTION);
-			System.exit(0);
-		}
-		if (winner == 3) {
-			JOptionPane.showMessageDialog(null," Stalemate!",null,JOptionPane.OK_OPTION);
-			System.exit(0);
-		}
+		
+		
 
 	}
 	
@@ -119,7 +146,7 @@ public class RistinollaFrame extends JFrame implements Runnable {
 			}
 		}
 		
-		public void updateButtons(int[] grid) {
+		public void updateView(int[] grid) {
 			for(int i=0;i<3;i++) {
 				for(int j=0;j<3;j++)   {
 					int currentPosMarker = grid[i*3 + j];

@@ -45,9 +45,9 @@ public class MainFrame extends JFrame {
 						//Luodaan random pelaajanimi jos ei käyttäjä laita.
 						int random = (int)(Math.random() * 10000);
 						String randomPlayerName = "player" + random;
-						player = new PlayerImp(lobby, randomPlayerName);
+						player = new PlayerImp(randomPlayerName);
 					} else {
-						player = new PlayerImp(lobby, playerName.getText());
+						player = new PlayerImp(playerName.getText());
 					}
 					
 					
