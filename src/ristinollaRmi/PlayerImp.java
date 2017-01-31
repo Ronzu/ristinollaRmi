@@ -11,10 +11,7 @@ public class PlayerImp extends UnicastRemoteObject implements Player{
 	private String marker;
 	private Game game;
 	
-	/*
-	 * 20.1.
-	 * Lisätty uusi konstruktori joka ottaa myös Lobbyn mukaan. 
-	 */
+	
 	public PlayerImp(String name) throws RemoteException {
 		this.name = name;
 		this.game = null;

@@ -52,19 +52,23 @@ public class MainFrame extends JFrame {
 						player = new PlayerImp(playerName.getText());
 					}
 					
-					// Etsit‰‰n clientin pelaajalle peli lobbyst‰. Lobby luo uuden pelin, mik‰li linjoilla on kaksi vapaata pelaajaa.
+					// Etsit‰‰n clientin pelaajalle peli lobbyst‰. 
+					// Lobby luo uuden pelin, mik‰li linjoilla on kaksi vapaata pelaajaa.
 					lobby.findGame(player); 
 					
 					// While-looppi tsekkaa sekunnin v‰lein, onko pelaajalle lˆytynyt peli
-					while(true) {
+					while(true) {	
 						try {
 							if(player.getGame() != null) {
+								
 								// Mik‰li peli lˆytyy, luodaan uusi peli-ikkuna...
 								RistinollaFrame ristinollaFrame = new RistinollaFrame(player);
 								Thread t  = new Thread(ristinollaFrame);
+								
 								// ...ja k‰ynnistet‰‰n se p‰ivittym‰‰n Game-objektin muutoksien mukaan.
 								t.start();
 								lobbyStatus.setText(player.echo());
+								
 								break; // While loopin voi t‰ss‰ vaiheessa keskeytt‰‰.
 							} // if 
 							Thread.sleep(1000);

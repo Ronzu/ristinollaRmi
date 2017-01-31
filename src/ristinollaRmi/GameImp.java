@@ -31,21 +31,23 @@ public class GameImp extends UnicastRemoteObject implements Game {
 	public GameImp(Player player1, Player player2) throws RemoteException {
 		super();
 		
-		initGrid();
+		initGrid(); // Gridi t‰yteen nollia
 		
 		this.player1 = player1;
 		this.player2 = player2;
 		
 		gameAlive = true;
 		
+		// Asetetaan pelaajille merkit
 		this.player1.setMarker("X");
 		this.player2.setMarker("O");
-		this.player1.setGame(this);
+		
+		// Pelaajat tiet‰‰ miss‰ peliss‰ ovat
+		this.player1.setGame(this); 
 		this.player2.setGame(this);
 		
+		// Pelaaja 1 aloittaa, kumpi ikin‰ onkaan.
 		this.playing = player1;
-		this.player1.print("You are player 1");
-		this.player2.print("you are player 2");
 		
 	}// gamimp constructor
 	

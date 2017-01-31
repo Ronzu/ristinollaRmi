@@ -45,6 +45,7 @@ public class RistinollaFrame extends JFrame implements Runnable {
 		// Tätä varten kirjoitettu oma sisäluokka.
 		listener = new GameListener(game, player);
 		
+		statusbar = new JTextField();
 		
 		// Laitetaan ulkoasu kuntoon.
 		setLayout(new BorderLayout());

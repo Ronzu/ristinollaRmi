@@ -25,9 +25,6 @@ public class LobbyImp extends UnicastRemoteObject implements Lobby {
 	 * (non-Javadoc)
 	 * @see ristinollaRmi.Lobby#findGame(ristinollaRmi.Player)
 	 * 
-	 * Eli tässähän tämä "synchronized" pistää metodin venailemaan että pelaajia on lopulta ainakin kaksi. 
-	 * Kommentti lähinnä omaa oppimista ja ymmärrystä varten.
-	 * 
 	 * TODO: pitäisi tsekata, että pelaajat ovat mestoilla, eivätkä ole sulkeneet välissä ikkunaa. Kirjoitetaan
 	 * siis pelaaja-oliolle joku "isAlive"-muuttuja.
 	 * 
@@ -35,7 +32,8 @@ public class LobbyImp extends UnicastRemoteObject implements Lobby {
 	
 	public boolean findGame(Player player) throws RemoteException {
 
-		players.add(player);
+		players.add(player); // Pelaaja lisätään lobbyyn odottamaan
+		
 		System.out.println("Pelaaja " + player.getName() + " lisätty Lobbyyn.");
 		
 		if (players.size() >= 2 && players.get(0) != null && players.get(0) != null) {
@@ -44,7 +42,6 @@ public class LobbyImp extends UnicastRemoteObject implements Lobby {
 			
 			try{
 				playerIsAlive = player.isAlive();
-				System.out.println("Check");
 			} catch (RemoteException e) {
 				players.remove(0);
 			}
