@@ -20,22 +20,8 @@ public class PlayerImp extends UnicastRemoteObject implements Player{
 		this.game = null;
 		this.marker = "x tai o";
 	}
-	
-	/*
-	 * 21.1.
-	 * Pistetään nyt tämmöinen setGame-metodi tänne, jota peliolio kutsuu laittamalla itsensä parametriksi.
-	 * Sitten saadaan pelaajatkin tietoiseksi siitä, minkä peliolion kanssa ollaan tekemisissä.
-	 */
 
-	@Override
-	public void setGame(Game game) throws RemoteException {
-		this.game = game;
-	}
 	
-	@Override
-	public Game getGame() throws RemoteException {
-		return this.game;
-	}
 	
 	/*
 	 * Selvitetään tässä, onko vuorossa tämä pelaaja vai toinen.
@@ -101,6 +87,16 @@ public class PlayerImp extends UnicastRemoteObject implements Player{
 	 */
 	public boolean isAlive() throws RemoteException {
 		return true;
+	}
+
+	@Override
+	public void setGame(Game game) throws RemoteException {
+		this.game = game;
+	}
+
+	@Override
+	public Game getGame() throws RemoteException {
+		return this.game;
 	}
 
 

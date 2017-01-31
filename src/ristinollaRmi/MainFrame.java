@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 public class MainFrame extends JFrame {
 	
+	private static final long serialVersionUID = -4238209101564932785L;
 	JButton findGameButton;
 	JTextField playerName;
 	JTextField lobbyStatus;
@@ -23,66 +24,65 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		
 		setTitle("Ristinolla");
-		
 		findGameButton = new JButton("Etsi uusi peli");
 		playerName = new JTextField("Syötä pelinimesi");
 		lobbyStatus = new JTextField();
 		
-		
-		/*
-		 * Tämä alkaa nyt olla OK! 
-		 * 
-		 */
-		
+		// Toiminnallisuus on nyt findGame-buttonin takana. 
 		findGameButton.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {	
 				try {
-					Lobby lobby = (Lobby) Naming.lookup("rmi://localhost:5099/" + Lobby.NAMING);
+					
+					// Haetaan registrystä lobby-objekti, jonka kautta saadaan Game-objekti uutta peliä varten.
+					Lobby lobby = (Lobby) Naming.lookup("rmi://localhost:5099/" + Lobby.NAMING); 
+					// Luodaan uusi pelaaja tätä clienttiä varten.
 					PlayerImp player;
 					
+					// Luodaan pelaajalle pelaajanimi, mikäli pelaaja ei sitä itse syötä
 					if(playerName.getText().equalsIgnoreCase("syötä pelinimesi") || playerName.getText() == "") {	
-						//Luodaan random pelaajanimi jos ei käyttäjä laita.
+						
 						int random = (int)(Math.random() * 10000);
 						String randomPlayerName = "player" + random;
 						player = new PlayerImp(randomPlayerName);
+					
 					} else {
+						// Jos pelaaja on syöttänyt nimensä, valitaan se.
 						player = new PlayerImp(playerName.getText());
 					}
 					
-					
+					// Etsitään clientin pelaajalle peli lobbystä. Lobby luo uuden pelin, mikäli linjoilla on kaksi vapaata pelaajaa.
 					lobby.findGame(player); 
-					lobbyStatus.setText("Odotetaan toista pelaajaa...");
 					
+					// While-looppi tsekkaa sekunnin välein, onko pelaajalle löytynyt peli
 					while(true) {
 						try {
 							if(player.getGame() != null) {
+								// Mikäli peli löytyy, luodaan uusi peli-ikkuna...
 								RistinollaFrame ristinollaFrame = new RistinollaFrame(player);
 								Thread t  = new Thread(ristinollaFrame);
+								// ...ja käynnistetään se päivittymään Game-objektin muutoksien mukaan.
 								t.start();
 								lobbyStatus.setText(player.echo());
-								break;
-							}
-							
+								break; // While loopin voi tässä vaiheessa keskeyttää.
+							} // if 
 							Thread.sleep(1000);
 							
-							
-							System.out.println("Odotetaan");
 						} catch (InterruptedException ex) {
 							ex.printStackTrace();
-						}
-					}
+						} // try
+					} // while
 					
 				} catch (MalformedURLException | RemoteException | NotBoundException ex) {
-			
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
-				}
-				
-			}
-		});
+				} //try
+			} // actionPerformed()
+		} // addActionListener 
+		); // new ActionListener() 
 		
-		
+		// Asetellaan vielä komponentit ikkunaan.
 		setLayout(new BorderLayout());
 		
 		add(playerName, BorderLayout.NORTH);
@@ -94,5 +94,4 @@ public class MainFrame extends JFrame {
 		setBounds(300,300,300,300);
 		
 	}
-
 }

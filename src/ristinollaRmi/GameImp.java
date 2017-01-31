@@ -49,40 +49,24 @@ public class GameImp extends UnicastRemoteObject implements Game {
 		
 	}// gamimp constructor
 	
-	/*
-	 * Antaa todellisuudessa pelivuoron.
-	 */
 	
 	@Override
-	public int getPlayer(Player player) throws RemoteException{
-		if (player.isMe(player1))
-			return 1;
-		else if(player.isMe(player2))
-			return 2;
-		else
-			return 0;
-	}//getplayer
-
-	@Override
 	public boolean makeMove(Player player, int gridPosition) throws RemoteException {
-		// TODO Auto-generated method stub
 		
 		if(grid[gridPosition] == 0 && playing.isMe(player) == true) {
 			
+			// Lautaan laitetaan 1 tai 2 riippuen pelaajasta.
 			if (player.isMe(player1)) {
-				grid[gridPosition] = 1;		
-				
-			}
-		else if (player.isMe(player2)) {
-				grid[gridPosition] = 2;
-				
-			}
-		} 
-		else {
+				grid[gridPosition] = 1;	
+			} else if (player.isMe(player2)) {
+				grid[gridPosition] = 2;		
+			} else;
+			
+		} else {
+			// Mikäli ruutu on täynnä, palautetaan false.
 			return false;
 		}
 		
-
 		// Lopuksi vaihdetaan vuoro.
 		if(playing.isMe(player1)){
 			playing = player2;
@@ -90,12 +74,10 @@ public class GameImp extends UnicastRemoteObject implements Game {
 		else if(playing.isMe(player2)){
 			playing = player1;
 		}
-
-		printGrid();
 		return true;
-		
-	}
+	} // makeMove()
 
+	
 	@Override
 	public boolean isItMyTurn(Player player) throws RemoteException {
 		if (playing.isMe(player)){
@@ -106,18 +88,17 @@ public class GameImp extends UnicastRemoteObject implements Game {
 		}
 	}
 	
+	
 	@Override
 	public boolean isGameAlive() throws RemoteException {
 		return this.gameAlive;
 	}
-
-	public void initGrid() {
-		this.grid = new int[9];
-		for(int i = 0; i<9; i++) {
-			this.grid[i] = 0;
-		}
-	}
 	
+	/*
+	 * GRIDIN MUOKKAUS
+	 */
+
+
 	@Override
 	public void printGrid() throws RemoteException {
 		for(int i = 0;i<grid.length;i++){
@@ -132,14 +113,24 @@ public class GameImp extends UnicastRemoteObject implements Game {
 		System.out.println("+-+-+-+");
 	}
 	
+	
+	// InitGrid alustaa Game-objektin pelilaudan tyhjäksi, täyteen nollia siis.
+	 
+	protected void initGrid() {
+		this.grid = new int[9];
+		for(int i = 0; i<9; i++) {
+			this.grid[i] = 0;
+		}
+	}
+	
+	/*
+	 * GETTERIT 
+	 */
+
+
 	@Override
 	public int[] getGrid() throws RemoteException{
 		return grid;
-	}
-	
-	@Override
-	public void setGrid(int x) throws RemoteException{
-		grid[x] = 0;
 	}
 	
 	/*
@@ -189,13 +180,11 @@ public class GameImp extends UnicastRemoteObject implements Game {
 
 	@Override
 	public Player getPlayerOne() throws RemoteException {
-		// TODO Auto-generated method stub
 		return this.player1;
 	}
 
 	@Override
 	public Player getPlayerTwo() throws RemoteException {
-		// TODO Auto-generated method stub
 		return this.player2;
 	}
 	

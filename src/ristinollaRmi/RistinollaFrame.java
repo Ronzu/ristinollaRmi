@@ -24,59 +24,59 @@ public class RistinollaFrame extends JFrame implements Runnable {
 	private static final long serialVersionUID = 1L;
 	GameButton [][] buttons = new GameButton[3][3]; // Buttonit vastaamaan ristinollaruudukkoa
 	JTextField statusbar; // Tilapalkki kertoo pelin tilan
-	GamePanel panel; // 
-	PlayerImp player;
-	Game game;
+	GamePanel panel; // oma objekti peliruudukon piirt‰miseen
+	PlayerImp player; // T‰m‰n clientin pelaaja.
+	Game game; // peli, jota pelataan. Saadaan player-objektilta.
 	GameListener listener; // Kuuntelee napsautukset ja p‰ivitt‰‰ pelin tilaa.
-	String status;
+	String status; // Tilapalkkiin p‰ivitett‰v‰ teksti
 	
-	/*
-	 * 
-	 * Konstruktori:
-	 * 
-	 */
+	// Noniin, alustetaan t‰h‰n nyt kaikki kondikseen.
 	public RistinollaFrame(PlayerImp player) throws RemoteException {
-		this.player = player;
+		
+		this.player = player; // Pelaaja saadaan parametrina
 		
 		try {
-			this.game = player.getGame();
-
+			this.game = player.getGame(); // Pelattava peli saadaan playerilta
 		} catch(RemoteException e) {
 			e.printStackTrace();
-		}
+		} // try
 
+		// luodaan uusi listener, joka tekee pelin kannalta oikeat asiat, kun peliruudukon nappuloita painetaan.
+		// T‰t‰ varten kirjoitettu oma sis‰luokka.
 		listener = new GameListener(game, player);
 		
+		
+		// Laitetaan ulkoasu kuntoon.
 		setLayout(new BorderLayout());
 		panel = new GamePanel();
 		add(panel, BorderLayout.CENTER);
 		
-		statusbar = new JTextField(player.getName());
 		statusbar.setEditable(false);
 		add(statusbar, BorderLayout.SOUTH);
-		setTitle("Ristinolla");
+		setTitle("Ristinolla - Kaikkien aikojen verkkopeli!");
 		
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(400,400,400,400);	
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Runnable#run()
-	 * 
-	 * T‰‰ll‰ p‰ivitell‰‰n sitten k‰yttˆliittym‰‰, jatkuvasti kyll‰kin, onko j‰rkev‰‰, no ei.
-	 * 
-	 */
 	
+	// T‰‰ll‰ p‰ivitell‰‰n sitten k‰yttˆliittym‰‰, maltillisesti nyt 10 kertaa sekunnissa. 
+	// K‰ynnistet‰‰n samalla, kun uusi peli luodaan.
 	@Override
 	public void run() {
-		
 		while(true) {
 			try {
-				updateView();
-				checkWinner();
-				Thread.sleep(100);
+				updateView(); // P‰ivitet‰‰n n‰kym‰
+				checkWinner(); // Tsekataan, onko jompi kumpi voittanut.
+				
+				/*
+				 * Ok, voittajantarkistusmetodi on v‰h‰n raskas, ja turha ajaa jatkuvasti. 
+				 * Ehk‰ ennemmin joka nappulanpainalluksen yhteydess‰ peliobjekti p‰ivitt‰isi jonkin voittaja-muuttujan,
+				 * jonka arvo sitten tsekattaisiin?
+				 */
+				
+				Thread.sleep(100); // Turha tosiaan jatkuvalla syˆtˆll‰ tarkistella...
 				
 			} catch (RemoteException | InterruptedException ex) {
 				ex.printStackTrace();
@@ -88,22 +88,24 @@ public class RistinollaFrame extends JFrame implements Runnable {
 	protected void updateView() throws RemoteException {
 		panel.updateView(this.game.getGrid()); // P‰ivitt‰‰ nappulat
 		
-		boolean turn = this.game.isItMyTurn(this.player);
+		boolean turn = this.game.isItMyTurn(this.player); // Boolean kertoo, onko t‰m‰n pelaajan vuoro.
 		
-		
+		// P‰ivitet‰‰n tilapalkki kertomaan, kumman vuoro on.
 		if (turn) {
 			status = "It's your turn.";
 		} else {
 			status = "It's your opponent's (" + this.game.getOpponent(this.player).getName() + ") turn.";
 		}
-		
-		statusbar.setText(status);
-	}
+		statusbar.setText(status); // Asetetaan oikea tilapalkin teksti.
+	} // updateView()
+	
 	
 	/*
+	 * Nyt on k‰ynyt sillein hassusti, ettei ole ollenkaan rematch-mahdollisuutta. Viel‰ pit‰isi myˆs keksi‰, ett‰
+	 * peli-objekti asetetaan loppuneeksi, kun voittaja on lˆytynyt.
 	 * 
+	 * T‰m‰ metodi anyway luo pop-up-ikkunan siit‰, kumpi on voittanut.
 	 */
-	
 	protected void checkWinner() throws RemoteException {
 		int winner = game.getWinner();
 		
@@ -124,12 +126,7 @@ public class RistinollaFrame extends JFrame implements Runnable {
 
 	}
 	
-
-	/*
-	 * 
-	 * Sis‰luokka GamePanel ristinollaruudukkoa varten.
-	 * 
-	 */
+	// Sis‰luokka GamePanel ristinollaruudukkoa varten.
 	class GamePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 		public GamePanel() {
@@ -146,7 +143,10 @@ public class RistinollaFrame extends JFrame implements Runnable {
 			}
 		}
 		
+		// Nappuloiden p‰ivitysmetodi.
 		public void updateView(int[] grid) {
+			
+			// K‰yd‰n joka nappulal‰pi, ja p‰ivitet‰‰n vastaamaan peli-objektilta saatua peliruudukkoa.
 			for(int i=0;i<3;i++) {
 				for(int j=0;j<3;j++)   {
 					int currentPosMarker = grid[i*3 + j];
@@ -165,6 +165,8 @@ public class RistinollaFrame extends JFrame implements Runnable {
 		
 	}
 	
+	// Sis‰luokka peliruudukon nappulaa varten. 
+	// Jatkettiin JButtonia, l‰hinn‰ ett‰ voidaan helposti havaita sijainti ruudukossa.
 	class GameButton extends JButton {
 
 		private static final long serialVersionUID = 4747888981137584058L;
@@ -187,7 +189,12 @@ public class RistinollaFrame extends JFrame implements Runnable {
 			return indexY + indexX*gridHeight;
 		}
 		
-	}
+	} // class GameButton
+	
+	/* Varsinainen toiminnallisuus onkin sitten laitettu t‰h‰n. Joka painalluksen j‰lkeen 
+	 * listeneri p‰ivitt‰‰ peliobjektin vastaamaan tapahtunutta painallusta. 
+	 * Peliobjekti taasen huolehtii vuoron vaihdosta.
+	 */
 	
 	class GameListener implements ActionListener {
 		
@@ -206,36 +213,27 @@ public class RistinollaFrame extends JFrame implements Runnable {
 			int pressedButtonIndex = -1;
 			
 			Object source = e.getSource();
-			
-			
+
 			if(source instanceof GameButton) {
 				gamebutton = (GameButton) source;
 				pressedButtonIndex = gamebutton.getOneDimensionalIndex();
 			}
 			
-			System.out.println("A button " + pressedButtonIndex + " was pressed");
 			
 			try {
 				boolean LegalMove = game.makeMove(player, pressedButtonIndex);
-//				int Winner = game.getWinner();
+
 				if (LegalMove) {
 					System.out.println(game.getWinner());
-					
-				}
-				
-				else   {
-					//TODO: pop-up joka ilmoittaa ett‰ n‰in ei saa tehd‰, ja antaa pelaajan valita uudestaan
-					
+				} else {
+					// Pop-up ilmoittaa virheellisest‰ siirrosta.
 					JOptionPane.showMessageDialog(null,"It's opponents turn or tile is full","Try again",JOptionPane.WARNING_MESSAGE);
 				}
 
 			} catch (RemoteException ex) {
 				System.out.println("Connection lost");			
-			}
+			} // try
 			
-		}
-		
-	}
-
-
+		} // actionPerformed()
+	} // class GameListener
 }
