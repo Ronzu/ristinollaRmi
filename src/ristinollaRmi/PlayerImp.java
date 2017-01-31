@@ -54,6 +54,7 @@ public class PlayerImp extends UnicastRemoteObject implements Player{
 	 * pelaajaobjekti ja sieltä tulee RemoteException.
 	 * Tällöin voidaan poikkeus hoitaa try-catch-blokilla.
 	 */
+	@Override
 	public boolean isAlive() throws RemoteException {
 		return true;
 	}
