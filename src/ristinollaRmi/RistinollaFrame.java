@@ -127,6 +127,8 @@ public class RistinollaFrame extends JFrame implements Runnable {
 
 	}
 	
+
+	
 	// Sis‰luokka GamePanel ristinollaruudukkoa varten.
 	class GamePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
@@ -223,16 +225,19 @@ public class RistinollaFrame extends JFrame implements Runnable {
 			
 			try {
 				boolean LegalMove = game.makeMove(player, pressedButtonIndex);
+				boolean alive = game.getOpponent(this.player).isAlive(); // t‰m‰ heitt‰‰ poikkeuksen jos vastustaja l‰htee
 
-				if (LegalMove) {
+				if (LegalMove && alive) {
 					System.out.println(game.getWinner());
-				} else {
+				} else if(alive && !LegalMove) {
 					// Pop-up ilmoittaa virheellisest‰ siirrosta.
 					JOptionPane.showMessageDialog(null,"It's opponents turn or tile is full","Try again",JOptionPane.WARNING_MESSAGE);
 				}
 
 			} catch (RemoteException ex) {
-				System.out.println("Connection lost");			
+				System.out.println("Connection lost");
+				JOptionPane.showMessageDialog(null,"Opponent left the game",null,JOptionPane.OK_OPTION); //hoidetaan poikkeus t‰ll‰
+				System.exit(0);
 			} // try
 			
 		} // actionPerformed()

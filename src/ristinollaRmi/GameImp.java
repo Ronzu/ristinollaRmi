@@ -203,5 +203,3 @@ public class GameImp extends UnicastRemoteObject implements Game {
 }// gameImp
 
 	
-	
-
