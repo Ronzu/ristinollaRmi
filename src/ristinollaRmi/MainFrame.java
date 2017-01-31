@@ -44,7 +44,7 @@ public class MainFrame extends JFrame {
 					if(playerName.getText().equalsIgnoreCase("syˆt‰ pelinimesi") || playerName.getText() == "") {	
 						
 						int random = (int)(Math.random() * 10000);
-						String randomPlayerName = "player" + random;
+						String randomPlayerName = "Player" + random;
 						player = new PlayerImp(randomPlayerName);
 					
 					} else {
@@ -67,7 +67,7 @@ public class MainFrame extends JFrame {
 								
 								// ...ja k‰ynnistet‰‰n se p‰ivittym‰‰n Game-objektin muutoksien mukaan.
 								t.start();
-								lobbyStatus.setText(player.echo());
+								lobbyStatus.setText(player.getName() + " aloitti pelin.");
 								
 								break; // While loopin voi t‰ss‰ vaiheessa keskeytt‰‰.
 							} // if 

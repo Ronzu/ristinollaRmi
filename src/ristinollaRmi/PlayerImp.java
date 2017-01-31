@@ -17,14 +17,8 @@ public class PlayerImp extends UnicastRemoteObject implements Player{
 		this.game = null;
 		this.marker = "x tai o";
 	}
-
 	
-	
-	/*
-	 * Selvitetään tässä, onko vuorossa tämä pelaaja vai toinen.
-	 * 
-	 */
-	
+	// Apumetodi sen selvittämiseen, onko vuorossa oleva pelaaja Clientin pelaaja vai vastustaja.
 	@Override
 	public boolean isMe(Player player) throws RemoteException{
 		if(player == null){
@@ -37,19 +31,9 @@ public class PlayerImp extends UnicastRemoteObject implements Player{
 		return false;
 	}
 	
-	/*
-	 * Voidaan tulostaa tietoa pelaajalle.
-	 */
+	// Marker on pelaajan ns tunnus eli X tai O
+	// tämä laitetaan sitten Clientin pelipöytään
 	
-	@Override
-	public void print(String smth) throws RemoteException{ 
-		System.out.println(smth);
-	}
-	
-	/*
-	 * Marker on pelaajan ns tunnus eli X tai O
-	 * tällä voidaan määrätä kumpi laitetaan oikeaan pelipöytään
-	 */
 	@Override
 	public void setMarker(String m) throws RemoteException{
 		marker = m;
@@ -66,20 +50,8 @@ public class PlayerImp extends UnicastRemoteObject implements Player{
 	}
 	
 	/*
-	 * Testailua varten...
-	 */
-	
-	public String echo() throws RemoteException {
-		return this.name + "is alive";
-	}
-	
-	
-	/*
-	 * (non-Javadoc)
-	 * @see ristinollaRmi.Player#isAlive()
-	 * 
 	 * tämähän voi palauttaa aina true, sillä kun Clientti suljetaan, kuolee myös 
-	 * pelaajaobjekti eikä kutsua enää voida suorittaa.
+	 * pelaajaobjekti ja sieltä tulee RemoteException.
 	 * Tällöin voidaan poikkeus hoitaa try-catch-blokilla.
 	 */
 	public boolean isAlive() throws RemoteException {

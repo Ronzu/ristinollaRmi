@@ -22,9 +22,6 @@ public class LobbyImp extends UnicastRemoteObject implements Lobby {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * @see ristinollaRmi.Lobby#findGame(ristinollaRmi.Player)
-	 * 
 	 * TODO: pitäisi tsekata, että pelaajat ovat mestoilla, eivätkä ole sulkeneet välissä ikkunaa. Kirjoitetaan
 	 * siis pelaaja-oliolle joku "isAlive"-muuttuja.
 	 * 
@@ -47,11 +44,8 @@ public class LobbyImp extends UnicastRemoteObject implements Lobby {
 			}
 			
 			if (playerIsAlive) {
-				for(Player playerIteration : players) {
-					System.out.println(playerIteration.getName());
-				}
+				System.out.println("Peli alkaa. Pelaajat ovat: " + players.get(0).getName() + " ja " + players.get(1).getName());
 				games.add(new GameImp(players.remove(0), players.remove(0)));
-				System.out.println("Peli alkanut.");
 			}
 		}
 		
